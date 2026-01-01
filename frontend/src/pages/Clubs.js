@@ -105,14 +105,14 @@ export default function Clubs() {
               >
                 <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-border/50 card-hover">
                   <div className="flex items-center gap-4 mb-4">
-                    <Avatar className="h-16 w-16 border-2 border-mahogany-200">
+                    <Avatar className="h-16 w-16 border-2 border-[#5c330a]/20">
                       <AvatarImage src={club.picture} alt={club.name} />
-                      <AvatarFallback className="bg-mahogany-100 text-mahogany-800 text-xl">
+                      <AvatarFallback className="bg-[#5c330a]/10 text-[#5c330a] text-xl">
                         {club.name?.charAt(0)?.toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="font-semibold text-lg text-foreground group-hover:text-mahogany-800 transition-colors">
+                      <h3 className="font-semibold text-lg text-foreground group-hover:text-[#5c330a] transition-colors">
                         {club.name}
                       </h3>
                       {club.city && (

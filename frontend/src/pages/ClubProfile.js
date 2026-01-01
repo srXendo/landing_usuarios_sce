@@ -161,9 +161,9 @@ export default function ClubProfile() {
         {/* Club Header */}
         <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 mb-8">
           <div className="flex flex-col md:flex-row items-start gap-6">
-            <Avatar className="h-24 w-24 border-4 border-mahogany-200">
+            <Avatar className="h-24 w-24 border-4 border-[#5c330a]/20">
               <AvatarImage src={club.picture} alt={club.name} />
-              <AvatarFallback className="bg-mahogany-100 text-mahogany-800 text-3xl">
+              <AvatarFallback className="bg-[#5c330a]/10 text-[#5c330a] text-3xl">
                 {club.name?.charAt(0)?.toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -181,7 +181,7 @@ export default function ClubProfile() {
                     </div>
                   )}
                 </div>
-                <Badge className="bg-mahogany-100 text-mahogany-800">Club</Badge>
+                <Badge className="bg-[#5c330a]/10 text-[#5c330a]">Club</Badge>
               </div>
 
               {club.bio && (
@@ -190,11 +190,11 @@ export default function ClubProfile() {
 
               <div className="flex gap-6 mt-6">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-mahogany-800">{club.member_count}</p>
+                  <p className="text-2xl font-bold text-[#5c330a]">{club.member_count}</p>
                   <p className="text-sm text-muted-foreground">Miembros</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-mahogany-800">{club.event_count}</p>
+                  <p className="text-2xl font-bold text-[#5c330a]">{club.event_count}</p>
                   <p className="text-sm text-muted-foreground">Eventos</p>
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default function ClubProfile() {
               {isOwner && (
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button size="sm" className="bg-mahogany-500 hover:bg-mahogany-600" data-testid="add-member-btn">
+                    <Button size="sm" className="bg-[#5c330a] hover:bg-[#4A2908]" data-testid="add-member-btn">
                       <UserPlus className="w-4 h-4 mr-1" />
                       Añadir
                     </Button>
@@ -273,7 +273,7 @@ export default function ClubProfile() {
                       </div>
                       <Button 
                         type="submit" 
-                        className="w-full bg-mahogany-500 hover:bg-mahogany-600"
+                        className="w-full bg-[#5c330a] hover:bg-[#4A2908]"
                         disabled={addingMember}
                         data-testid="submit-member-btn"
                       >
@@ -295,7 +295,7 @@ export default function ClubProfile() {
                   >
                     <div className="flex items-center gap-3">
                       <Avatar className="h-10 w-10">
-                        <AvatarFallback className="bg-mahogany-100 text-mahogany-800">
+                        <AvatarFallback className="bg-[#5c330a]/10 text-[#5c330a]">
                           {member.user_name?.charAt(0)?.toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
