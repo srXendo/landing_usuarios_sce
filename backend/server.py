@@ -57,6 +57,10 @@ class UserResponse(BaseModel):
     bio: Optional[str] = None
     picture: Optional[str] = None
     created_at: Optional[str] = None
+    chess_com_username: Optional[str] = None
+    chess_com_rating: Optional[int] = None
+    lichess_username: Optional[str] = None
+    lichess_rating: Optional[int] = None
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None
@@ -64,6 +68,21 @@ class UserUpdate(BaseModel):
     city: Optional[str] = None
     bio: Optional[str] = None
     picture: Optional[str] = None
+    chess_com_username: Optional[str] = None
+    lichess_username: Optional[str] = None
+
+class ChessAccountLink(BaseModel):
+    platform: str  # "chess_com" or "lichess"
+    username: str
+
+class ChessRatingResponse(BaseModel):
+    platform: str
+    username: str
+    rapid_rating: Optional[int] = None
+    blitz_rating: Optional[int] = None
+    bullet_rating: Optional[int] = None
+    best_rating: Optional[int] = None
+    skill_level: str  # Calculated: principiante/medio/avanzado
 
 class EventBase(BaseModel):
     title: str
