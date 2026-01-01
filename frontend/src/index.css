@@ -22,29 +22,29 @@ code {
 @layer base {
     :root {
         --background: 40 20% 96%;
-        --foreground: 0 19% 25%;
+        --foreground: 28 82% 20%;
         --card: 0 0% 100%;
-        --card-foreground: 0 19% 25%;
+        --card-foreground: 28 82% 20%;
         --popover: 0 0% 100%;
-        --popover-foreground: 0 19% 25%;
-        --primary: 0 37% 26%;
-        --primary-foreground: 40 20% 96%;
-        --secondary: 20 100% 38%;
+        --popover-foreground: 28 82% 20%;
+        --primary: 28 82% 20%;
+        --primary-foreground: 40 30% 97%;
+        --secondary: 30 55% 36%;
         --secondary-foreground: 0 0% 100%;
-        --muted: 40 10% 90%;
-        --muted-foreground: 24 6% 44%;
+        --muted: 35 15% 90%;
+        --muted-foreground: 28 20% 40%;
         --accent: 100 30% 37%;
         --accent-foreground: 0 0% 100%;
         --destructive: 0 84% 60%;
         --destructive-foreground: 0 0% 98%;
-        --border: 30 7% 90%;
-        --input: 30 7% 90%;
-        --ring: 0 37% 26%;
-        --chart-1: 20 100% 38%;
+        --border: 30 10% 88%;
+        --input: 30 10% 88%;
+        --ring: 28 82% 20%;
+        --chart-1: 30 55% 36%;
         --chart-2: 100 30% 37%;
-        --chart-3: 0 37% 26%;
+        --chart-3: 28 82% 20%;
         --chart-4: 40 60% 50%;
-        --chart-5: 0 19% 25%;
+        --chart-5: 28 82% 20%;
         --radius: 0.75rem;
     }
 }

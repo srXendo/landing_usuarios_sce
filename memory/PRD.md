@@ -30,18 +30,25 @@ MVP web full-stack para la comunidad de ajedrez en Cataluña. Permite a usuarios
 - ✅ UI Playtomic-style con colores mahogany/beige
 - ✅ Mobile bottom navigation
 - ✅ Enlace encuesta configurable
+- ✅ **Integración Chess.com** - Vincular cuenta, importar ratings
+- ✅ **Integración Lichess** - Vincular cuenta, importar ratings
+- ✅ **Auto-cálculo de nivel** - Basado en rating (principiante <1200, medio 1200-1800, avanzado >1800)
+- ✅ **Refrescar ratings** - Actualizar ratings desde APIs
+- ✅ **Desvincular cuentas** - Eliminar vinculación
 
 ## Tech Stack
 - Frontend: React + Tailwind + Shadcn UI
 - Backend: FastAPI + Motor (async MongoDB)
 - Auth: bcrypt + Emergent Google OAuth
 - Database: MongoDB
+- External APIs: Chess.com Public API, Lichess API
 
 ## Prioritized Backlog
 ### P0 (Done)
 - Core event CRUD ✅
 - Auth system ✅
 - User/Club profiles ✅
+- Chess.com/Lichess integration ✅
 
 ### P1 (Next)
 - Notificaciones de eventos
@@ -49,6 +56,5 @@ MVP web full-stack para la comunidad de ajedrez en Cataluña. Permite a usuarios
 - Mapa de eventos
 
 ### P2 (Future)
-- Sistema de rankings/ELO
-- Integración con Chess.com/Lichess
+- Sistema de rankings/ELO interno
 - Pagos para torneos premium
