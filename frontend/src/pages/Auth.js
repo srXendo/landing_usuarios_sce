@@ -119,13 +119,14 @@ export default function Auth() {
           alt="Chess"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-mahogany-900/80 to-mahogany-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#5c330a]/90 to-[#5c330a]/50" />
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <div className="text-center">
-            <span className="text-6xl mb-6 block">♔</span>
-            <h2 className="font-heading text-4xl font-bold text-white mb-4">
-              Social Chess Events
-            </h2>
+            <img 
+              src="https://customer-assets.emergentagent.com/job_playmate-chess/artifacts/o36rjtsy_Presentacio%CC%81n%20app%20y%20MVP.png" 
+              alt="Chess Events" 
+              className="h-20 mx-auto mb-6 brightness-0 invert"
+            />
             <p className="text-xl text-beige-200">
               La comunidad de ajedrez más activa de Cataluña
             </p>
@@ -145,10 +146,11 @@ export default function Auth() {
           </Link>
 
           <div className="lg:hidden text-center mb-8">
-            <span className="text-4xl">♔</span>
-            <h1 className="font-heading text-2xl font-bold text-mahogany-900 mt-2">
-              Social Chess Events
-            </h1>
+            <img 
+              src="https://customer-assets.emergentagent.com/job_playmate-chess/artifacts/o36rjtsy_Presentacio%CC%81n%20app%20y%20MVP.png" 
+              alt="Chess Events" 
+              className="h-12 mx-auto"
+            />
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50">
@@ -194,7 +196,7 @@ export default function Auth() {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-mahogany-800 hover:bg-mahogany-900 text-white rounded-full py-5"
+                    className="w-full bg-[#5c330a] hover:bg-[#4A2908] text-white rounded-full py-5"
                     disabled={loading}
                     data-testid="login-submit"
                   >
@@ -340,7 +342,7 @@ export default function Auth() {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-mahogany-800 hover:bg-mahogany-900 text-white rounded-full py-5"
+                    className="w-full bg-[#5c330a] hover:bg-[#4A2908] text-white rounded-full py-5"
                     disabled={loading}
                     data-testid="register-submit"
                   >
