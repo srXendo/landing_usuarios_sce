@@ -59,7 +59,7 @@ export default function Events() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="font-heading text-3xl md:text-4xl font-bold text-mahogany-900">
+          <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#5c330a]">
             Eventos de Ajedrez
           </h1>
           <p className="mt-2 text-muted-foreground">

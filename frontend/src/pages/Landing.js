@@ -18,7 +18,7 @@ export default function Landing() {
             alt="Chess players"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-mahogany-900/90 via-mahogany-900/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#5c330a]/95 via-[#5c330a]/80 to-transparent" />
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
@@ -32,7 +32,7 @@ export default function Landing() {
             
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Link to="/events">
-                <Button size="lg" className="bg-mahogany-500 hover:bg-mahogany-600 text-white rounded-full px-8 py-6 font-medium shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-see-events">
+                <Button size="lg" className="bg-[#8B5A2B] hover:bg-[#6B4423] text-white rounded-full px-8 py-6 font-medium shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-see-events">
                   <Calendar className="w-5 h-5 mr-2" />
                   Ver Eventos
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -75,8 +75,8 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
-              <div className="w-14 h-14 bg-mahogany-100 rounded-2xl flex items-center justify-center mb-6">
-                <Calendar className="w-7 h-7 text-mahogany-800" />
+              <div className="w-14 h-14 bg-[#5c330a]/10 rounded-2xl flex items-center justify-center mb-6">
+                <Calendar className="w-7 h-7 text-[#5c330a]" />
               </div>
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
                 Eventos para todos
@@ -87,8 +87,8 @@ export default function Landing() {
             </div>
 
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
-              <div className="w-14 h-14 bg-mahogany-100 rounded-2xl flex items-center justify-center mb-6">
-                <Users className="w-7 h-7 text-mahogany-800" />
+              <div className="w-14 h-14 bg-[#5c330a]/10 rounded-2xl flex items-center justify-center mb-6">
+                <Users className="w-7 h-7 text-[#5c330a]" />
               </div>
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
                 Clubes activos
@@ -99,8 +99,8 @@ export default function Landing() {
             </div>
 
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
-              <div className="w-14 h-14 bg-mahogany-100 rounded-2xl flex items-center justify-center mb-6">
-                <MapPin className="w-7 h-7 text-mahogany-800" />
+              <div className="w-14 h-14 bg-[#5c330a]/10 rounded-2xl flex items-center justify-center mb-6">
+                <MapPin className="w-7 h-7 text-[#5c330a]" />
               </div>
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
                 Cerca de ti
@@ -114,17 +114,17 @@ export default function Landing() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-mahogany-800">
+      <section className="py-20 bg-[#5c330a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Trophy className="w-16 h-16 text-mahogany-300 mx-auto mb-6" />
+          <Trophy className="w-16 h-16 text-[#8B5A2B] mx-auto mb-6" />
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
             ¿Listo para tu próxima partida?
           </h2>
-          <p className="text-xl text-mahogany-200 mb-10 max-w-xl mx-auto">
+          <p className="text-xl text-beige-200 mb-10 max-w-xl mx-auto">
             Únete a la comunidad de ajedrez más activa de Cataluña
           </p>
           <Link to="/auth">
-            <Button size="lg" className="bg-white text-mahogany-800 hover:bg-beige-100 rounded-full px-10 py-6 font-medium shadow-lg" data-testid="cta-register">
+            <Button size="lg" className="bg-white text-[#5c330a] hover:bg-beige-100 rounded-full px-10 py-6 font-medium shadow-lg" data-testid="cta-register">
               Crear cuenta gratis
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
@@ -137,11 +137,14 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">♔</span>
-              <span className="font-heading font-bold text-xl text-mahogany-800">Social Chess Events</span>
+              <img 
+                src="https://customer-assets.emergentagent.com/job_playmate-chess/artifacts/o36rjtsy_Presentacio%CC%81n%20app%20y%20MVP.png" 
+                alt="Chess Events" 
+                className="h-8 object-contain"
+              />
             </div>
             <p className="text-muted-foreground text-sm">
-              © 2025 Social Chess Events. Todos los derechos reservados.
+              © 2025 Chess Events. Todos los derechos reservados.
             </p>
           </div>
         </div>
