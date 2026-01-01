@@ -31,8 +31,11 @@ export function Navbar() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-8">
               <Link to="/" className="flex items-center gap-2" data-testid="logo-link">
-                <span className="text-2xl">♔</span>
-                <span className="font-heading font-bold text-xl text-mahogany-800">Social Chess</span>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_playmate-chess/artifacts/o36rjtsy_Presentacio%CC%81n%20app%20y%20MVP.png" 
+                  alt="Chess Events" 
+                  className="h-10 object-contain"
+                />
               </Link>
               
               <div className="flex items-center gap-1">
@@ -63,7 +66,7 @@ export function Navbar() {
               {user ? (
                 <>
                   <Link to="/create">
-                    <Button className="bg-mahogany-500 hover:bg-mahogany-600 text-white rounded-full" data-testid="create-event-btn">
+                    <Button className="bg-[#5c330a] hover:bg-[#4A2908] text-white rounded-full" data-testid="create-event-btn">
                       <Plus className="w-4 h-4 mr-2" />
                       Crear Evento
                     </Button>
@@ -104,7 +107,7 @@ export function Navbar() {
                 </>
               ) : (
                 <Link to="/auth">
-                  <Button className="bg-mahogany-800 hover:bg-mahogany-900 text-white rounded-full px-6" data-testid="login-btn">
+                  <Button className="bg-[#5c330a] hover:bg-[#4A2908] text-white rounded-full px-6" data-testid="login-btn">
                     Iniciar Sesión
                   </Button>
                 </Link>
@@ -116,26 +119,26 @@ export function Navbar() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-border p-2 flex justify-around items-center z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:hidden">
-        <Link to="/" className={`flex flex-col items-center p-2 rounded-lg ${isActive("/") ? "text-mahogany-800 bg-mahogany-50" : "text-muted-foreground"}`}>
+        <Link to="/" className={`flex flex-col items-center p-2 rounded-lg ${isActive("/") ? "text-[#5c330a] bg-[#5c330a]/10" : "text-muted-foreground"}`}>
           <Home className="w-5 h-5" />
           <span className="text-xs mt-1">Inicio</span>
         </Link>
-        <Link to="/events" className={`flex flex-col items-center p-2 rounded-lg ${isActive("/events") ? "text-mahogany-800 bg-mahogany-50" : "text-muted-foreground"}`}>
+        <Link to="/events" className={`flex flex-col items-center p-2 rounded-lg ${isActive("/events") ? "text-[#5c330a] bg-[#5c330a]/10" : "text-muted-foreground"}`}>
           <Calendar className="w-5 h-5" />
           <span className="text-xs mt-1">Eventos</span>
         </Link>
         {user && (
           <Link to="/create" className="flex flex-col items-center p-2">
-            <div className="bg-mahogany-500 text-white rounded-full p-3 -mt-6 shadow-lg">
+            <div className="bg-[#5c330a] text-white rounded-full p-3 -mt-6 shadow-lg">
               <Plus className="w-5 h-5" />
             </div>
           </Link>
         )}
-        <Link to="/clubs" className={`flex flex-col items-center p-2 rounded-lg ${isActive("/clubs") ? "text-mahogany-800 bg-mahogany-50" : "text-muted-foreground"}`}>
+        <Link to="/clubs" className={`flex flex-col items-center p-2 rounded-lg ${isActive("/clubs") ? "text-[#5c330a] bg-[#5c330a]/10" : "text-muted-foreground"}`}>
           <Users className="w-5 h-5" />
           <span className="text-xs mt-1">Clubes</span>
         </Link>
-        <Link to={user ? "/profile" : "/auth"} className={`flex flex-col items-center p-2 rounded-lg ${isActive("/profile") || isActive("/auth") ? "text-mahogany-800 bg-mahogany-50" : "text-muted-foreground"}`}>
+        <Link to={user ? "/profile" : "/auth"} className={`flex flex-col items-center p-2 rounded-lg ${isActive("/profile") || isActive("/auth") ? "text-[#5c330a] bg-[#5c330a]/10" : "text-muted-foreground"}`}>
           <User className="w-5 h-5" />
           <span className="text-xs mt-1">{user ? "Perfil" : "Entrar"}</span>
         </Link>
