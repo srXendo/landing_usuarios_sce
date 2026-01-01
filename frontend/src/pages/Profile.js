@@ -15,9 +15,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-import { MapPin, User, Edit2, Save, X, Loader2 } from "lucide-react";
+import { MapPin, User, Edit2, Save, X, Loader2, Link2, RefreshCw, Unlink, Trophy, Zap, Target } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -43,6 +52,14 @@ export default function Profile() {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [editData, setEditData] = useState({});
+  
+  // Chess linking state
+  const [linkDialogOpen, setLinkDialogOpen] = useState(false);
+  const [linkPlatform, setLinkPlatform] = useState("chess_com");
+  const [linkUsername, setLinkUsername] = useState("");
+  const [linking, setLinking] = useState(false);
+  const [lookupResult, setLookupResult] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const isOwnProfile = !id || (user && user.user_id === id);
   const profileId = id || user?.user_id;
@@ -103,6 +120,116 @@ export default function Profile() {
     }
   };
 
+  const handleLookupChess = async () => {
+    if (!linkUsername.trim()) {
+      toast.error("Introduce un nombre de usuario");
+      return;
+    }
+
+    setLinking(true);
+    setLookupResult(null);
+    try {
+      const response = await fetch(`${API}/chess/lookup/${linkPlatform}/${linkUsername.trim()}`, {
+        credentials: "include"
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setLookupResult(data);
+      } else {
+        const error = await response.json();
+        toast.error(error.detail || "Usuario no encontrado");
+      }
+    } catch (error) {
+      toast.error("Error de conexión");
+    } finally {
+      setLinking(false);
+    }
+  };
+
+  const handleLinkAccount = async () => {
+    setLinking(true);
+    try {
+      const response = await fetch(`${API}/chess/link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          platform: linkPlatform,
+          username: linkUsername.trim()
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setProfile(data.user);
+        setUser(data.user);
+        setLinkDialogOpen(false);
+        setLinkUsername("");
+        setLookupResult(null);
+        toast.success(`¡Cuenta de ${linkPlatform === "chess_com" ? "Chess.com" : "Lichess"} vinculada!`);
+      } else {
+        const error = await response.json();
+        toast.error(error.detail || "Error al vincular cuenta");
+      }
+    } catch (error) {
+      toast.error("Error de conexión");
+    } finally {
+      setLinking(false);
+    }
+  };
+
+  const handleRefreshRatings = async () => {
+    setRefreshing(true);
+    try {
+      const response = await fetch(`${API}/chess/refresh`, {
+        method: "POST",
+        credentials: "include"
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setProfile(data.user);
+        setUser(data.user);
+        toast.success("Ratings actualizados");
+      } else {
+        const error = await response.json();
+        toast.error(error.detail || "Error al actualizar ratings");
+      }
+    } catch (error) {
+      toast.error("Error de conexión");
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const handleUnlinkAccount = async (platform) => {
+    try {
+      const response = await fetch(`${API}/chess/unlink/${platform}`, {
+        method: "DELETE",
+        credentials: "include"
+      });
+
+      if (response.ok) {
+        const updatedProfile = { ...profile };
+        if (platform === "chess_com") {
+          delete updatedProfile.chess_com_username;
+          delete updatedProfile.chess_com_rating;
+        } else {
+          delete updatedProfile.lichess_username;
+          delete updatedProfile.lichess_rating;
+        }
+        setProfile(updatedProfile);
+        setUser(updatedProfile);
+        toast.success(`Cuenta de ${platform === "chess_com" ? "Chess.com" : "Lichess"} desvinculada`);
+      } else {
+        toast.error("Error al desvincular");
+      }
+    } catch (error) {
+      toast.error("Error de conexión");
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-beige-100">
@@ -123,6 +250,8 @@ export default function Profile() {
   }
 
   if (!profile) return null;
+
+  const hasChessAccounts = profile.chess_com_username || profile.lichess_username;
 
   return (
     <div className="min-h-screen bg-beige-100">
@@ -269,16 +398,237 @@ export default function Profile() {
                   </div>
                 )}
               </div>
-
-              {!profile.bio && !profile.skill_level && !profile.city && (
-                <p className="text-muted-foreground text-center py-8">
-                  {isOwnProfile 
-                    ? "Tu perfil está vacío. ¡Añade información sobre ti!"
-                    : "Este usuario aún no ha completado su perfil"
-                  }
-                </p>
-              )}
             </div>
+          )}
+        </div>
+
+        {/* Chess Accounts Section */}
+        <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 mt-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="font-heading text-xl font-semibold">Cuentas de Ajedrez</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Vincula tus cuentas para importar tu rating automáticamente
+              </p>
+            </div>
+            
+            {isOwnProfile && (
+              <div className="flex gap-2">
+                {hasChessAccounts && (
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={handleRefreshRatings}
+                    disabled={refreshing}
+                    data-testid="refresh-ratings-btn"
+                  >
+                    {refreshing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+                  </Button>
+                )}
+                <Dialog open={linkDialogOpen} onOpenChange={setLinkDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button size="sm" className="bg-mahogany-500 hover:bg-mahogany-600" data-testid="link-chess-btn">
+                      <Link2 className="w-4 h-4 mr-2" />
+                      Vincular
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Vincular cuenta de ajedrez</DialogTitle>
+                      <DialogDescription>
+                        Conecta tu cuenta de Chess.com o Lichess para importar tu rating
+                      </DialogDescription>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4 mt-4">
+                      <Tabs value={linkPlatform} onValueChange={(v) => { setLinkPlatform(v); setLookupResult(null); }}>
+                        <TabsList className="grid w-full grid-cols-2">
+                          <TabsTrigger value="chess_com" data-testid="tab-chesscom">
+                            <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="Chess.com" className="w-5 h-5 mr-2" />
+                            Chess.com
+                          </TabsTrigger>
+                          <TabsTrigger value="lichess" data-testid="tab-lichess">
+                            <img src="https://lichess1.org/assets/logo/lichess-favicon-32.png" alt="Lichess" className="w-5 h-5 mr-2" />
+                            Lichess
+                          </TabsTrigger>
+                        </TabsList>
+                      </Tabs>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="chess-username">Nombre de usuario</Label>
+                        <div className="flex gap-2">
+                          <Input
+                            id="chess-username"
+                            placeholder={linkPlatform === "chess_com" ? "ej: hikaru" : "ej: DrNykterstein"}
+                            value={linkUsername}
+                            onChange={(e) => { setLinkUsername(e.target.value); setLookupResult(null); }}
+                            className="flex-1"
+                            data-testid="chess-username-input"
+                          />
+                          <Button 
+                            variant="outline"
+                            onClick={handleLookupChess}
+                            disabled={linking || !linkUsername.trim()}
+                            data-testid="lookup-btn"
+                          >
+                            {linking ? <Loader2 className="w-4 h-4 animate-spin" /> : "Buscar"}
+                          </Button>
+                        </div>
+                      </div>
+
+                      {lookupResult && (
+                        <div className="bg-beige-50 rounded-xl p-4 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{lookupResult.username}</span>
+                            <Badge className={`${levelColors[lookupResult.skill_level]} border-0`}>
+                              {levelLabels[lookupResult.skill_level]}
+                            </Badge>
+                          </div>
+                          
+                          <div className="grid grid-cols-3 gap-3 text-center">
+                            {lookupResult.bullet_rating && (
+                              <div className="bg-white rounded-lg p-2">
+                                <Zap className="w-4 h-4 mx-auto text-yellow-500 mb-1" />
+                                <p className="text-xs text-muted-foreground">Bullet</p>
+                                <p className="font-bold">{lookupResult.bullet_rating}</p>
+                              </div>
+                            )}
+                            {lookupResult.blitz_rating && (
+                              <div className="bg-white rounded-lg p-2">
+                                <Target className="w-4 h-4 mx-auto text-orange-500 mb-1" />
+                                <p className="text-xs text-muted-foreground">Blitz</p>
+                                <p className="font-bold">{lookupResult.blitz_rating}</p>
+                              </div>
+                            )}
+                            {lookupResult.rapid_rating && (
+                              <div className="bg-white rounded-lg p-2">
+                                <Trophy className="w-4 h-4 mx-auto text-blue-500 mb-1" />
+                                <p className="text-xs text-muted-foreground">Rapid</p>
+                                <p className="font-bold">{lookupResult.rapid_rating}</p>
+                              </div>
+                            )}
+                          </div>
+
+                          <Button 
+                            className="w-full bg-mahogany-500 hover:bg-mahogany-600"
+                            onClick={handleLinkAccount}
+                            disabled={linking}
+                            data-testid="confirm-link-btn"
+                          >
+                            {linking ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Link2 className="w-4 h-4 mr-2" />}
+                            Vincular esta cuenta
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
+          </div>
+
+          {/* Chess.com Account */}
+          <div className="space-y-4">
+            {profile.chess_com_username ? (
+              <div className="flex items-center justify-between p-4 bg-beige-50 rounded-xl">
+                <div className="flex items-center gap-4">
+                  <img 
+                    src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" 
+                    alt="Chess.com" 
+                    className="w-10 h-10"
+                  />
+                  <div>
+                    <p className="font-medium">{profile.chess_com_username}</p>
+                    <p className="text-sm text-muted-foreground">Chess.com</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-mahogany-800">{profile.chess_com_rating}</p>
+                    <p className="text-xs text-muted-foreground">Rating</p>
+                  </div>
+                  {isOwnProfile && (
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => handleUnlinkAccount("chess_com")}
+                      className="text-muted-foreground hover:text-destructive"
+                      data-testid="unlink-chesscom-btn"
+                    >
+                      <Unlink className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between p-4 border border-dashed border-border rounded-xl">
+                <div className="flex items-center gap-4">
+                  <img 
+                    src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" 
+                    alt="Chess.com" 
+                    className="w-10 h-10 opacity-50"
+                  />
+                  <div>
+                    <p className="font-medium text-muted-foreground">Chess.com</p>
+                    <p className="text-sm text-muted-foreground">No vinculada</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Lichess Account */}
+            {profile.lichess_username ? (
+              <div className="flex items-center justify-between p-4 bg-beige-50 rounded-xl">
+                <div className="flex items-center gap-4">
+                  <img 
+                    src="https://lichess1.org/assets/logo/lichess-favicon-32.png" 
+                    alt="Lichess" 
+                    className="w-10 h-10"
+                  />
+                  <div>
+                    <p className="font-medium">{profile.lichess_username}</p>
+                    <p className="text-sm text-muted-foreground">Lichess</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-mahogany-800">{profile.lichess_rating}</p>
+                    <p className="text-xs text-muted-foreground">Rating</p>
+                  </div>
+                  {isOwnProfile && (
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => handleUnlinkAccount("lichess")}
+                      className="text-muted-foreground hover:text-destructive"
+                      data-testid="unlink-lichess-btn"
+                    >
+                      <Unlink className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between p-4 border border-dashed border-border rounded-xl">
+                <div className="flex items-center gap-4">
+                  <img 
+                    src="https://lichess1.org/assets/logo/lichess-favicon-32.png" 
+                    alt="Lichess" 
+                    className="w-10 h-10 opacity-50"
+                  />
+                  <div>
+                    <p className="font-medium text-muted-foreground">Lichess</p>
+                    <p className="text-sm text-muted-foreground">No vinculada</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {!hasChessAccounts && !isOwnProfile && (
+            <p className="text-center text-muted-foreground py-4">
+              Este usuario no ha vinculado cuentas de ajedrez
+            </p>
           )}
         </div>
       </main>
