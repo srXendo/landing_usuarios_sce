@@ -539,6 +539,15 @@ function BetaSignupSection() {
       return;
     }
 
+    // Check if API is configured
+    if (BETA_SIGNUP_API.includes("YOUR_FORM_ID") || !BETA_SIGNUP_API) {
+      // For demo purposes, show success even without backend
+      console.log("Beta signup (demo mode):", formData);
+      setStatus("success");
+      setFormData({ name: "", city: "", email: "" });
+      return;
+    }
+
     setStatus("loading");
     setErrorMsg("");
 
