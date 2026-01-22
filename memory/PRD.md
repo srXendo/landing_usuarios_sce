@@ -3,7 +3,7 @@
 ## Resumen
 Landing page estática en Next.js para Chess Events, una app de ajedrez presencial.
 
-## Implementado (Enero 2026)
+## Implementado
 
 ### Tecnología
 - Next.js 16 con App Router
@@ -11,6 +11,7 @@ Landing page estática en Next.js para Chess Events, una app de ajedrez presenci
 - Tailwind CSS v4
 - Framer Motion para animaciones
 - Página 100% estática
+- Google Analytics (configurable via env)
 
 ### Secciones de la Landing
 1. **Hero** - Mensaje principal "El ajedrez vuelve al tablero real" con CTAs
@@ -18,20 +19,25 @@ Landing page estática en Next.js para Chess Events, una app de ajedrez presenci
 3. **Timeline de Funcionalidades** - Red social, torneos, eventos, seguimiento en vivo, gamificación
 4. **SCE Points** - Explicación de los espacios colaboradores (bares, cafeterías)
 5. **Cómo funciona** - 4 pasos para empezar
-6. **Formulario Beta** - Captación de usuarios (Nombre, Ciudad, Email*)
+6. **Formulario Beta** - Captación de usuarios (Nombre*, Ciudad, Email*)
 7. **Footer** - Logo, enlace a encuesta
 
 ### Configuración
 Archivo `/src/config.ts` para personalizar:
-- `betaSignupApi`: URL del endpoint para el formulario
+- `googleFormUrl`: URL del endpoint de Google Forms para el formulario beta
+- `googleFormEntries`: IDs de los campos del formulario de Google
 - `surveyUrl`: URL de la encuesta de Google Forms
 - `contactEmail`: Email de contacto
 
+### Google Analytics
+Archivo `.env.local`:
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID`: ID de medición de Google Analytics (ej: G-XXXXXXXXXX)
+
 ### Formulario Beta
-- Campos: Nombre (opcional), Ciudad (opcional), Email (requerido)
-- Actualmente en modo demo (console.log)
-- Para conectar a un backend real, modificar `betaSignupApi` en config.ts
-- Compatible con: Formspree, Netlify Forms, API propia
+- Campos: Nombre (requerido), Ciudad (opcional), Email (requerido)
+- Integrado con Google Forms (submit directo)
+- Google Form URL: https://docs.google.com/forms/d/e/1FAIpQLSfqJNb-rUwhBDxM21nKt7N7y1dlCkzQQX39mEmObpfIfPPzrw/formResponse
+- **Nota**: El usuario reportó que no está funcionando - requiere investigación
 
 ## Colores
 - Primary: #5c330a (marrón chocolate)
@@ -43,17 +49,33 @@ https://customer-assets.emergentagent.com/job_playmate-chess/artifacts/p4fd6hj4_
 
 ## URLs Importantes
 - Encuesta: https://docs.google.com/forms/d/e/1FAIpQLSeQFsCSq0LHRU47WYyAxKZjKn6UHFWJ8_cXQNDjMMa7bYhRKw/viewform?usp=dialog
+- Formulario Beta: https://docs.google.com/forms/d/e/1FAIpQLSfqJNb-rUwhBDxM21nKt7N7y1dlCkzQQX39mEmObpfIfPPzrw/viewform
 
 ## Para Deploy Estático
 ```bash
 cd frontend
 yarn build
 # Los archivos estáticos están en .next/
-# O usar: yarn export para generar en /out
 ```
 
+## Arquitectura de Archivos
+```
+/app/frontend/
+├── src/
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx      # Google Analytics + metadata
+│   │   └── page.tsx        # Landing page completa
+│   └── config.ts           # Configuración centralizada
+├── .env.local              # Variables de entorno (GA_ID)
+└── package.json
+```
+
+## Changelog
+- **Diciembre 2025**: Añadido Google Analytics, eliminado backend vacío, limpieza de código
+
 ## Siguientes Pasos
-- [ ] Configurar endpoint real para formulario beta (Formspree, API propia, etc.)
-- [ ] Añadir analytics (Google Analytics, Plausible, etc.)
+- [ ] Investigar problema del formulario de Google Forms (usuario reportó que no funciona)
+- [ ] Configurar ID de Google Analytics real (NEXT_PUBLIC_GA_MEASUREMENT_ID)
+- [ ] Conectar dominio personalizado
 - [ ] Optimizar imágenes con next/image
-- [ ] Añadir meta tags de Open Graph para compartir
