@@ -626,10 +626,11 @@ function BetaSignupSection() {
                 <div>
                   <label className="block text-sm font-medium text-[#5c330a] mb-2">
                     <User className="w-4 h-4 inline mr-2" />
-                    Nombre
+                    Nombre <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
+                    required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Tu nombre"
