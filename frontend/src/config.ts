@@ -9,7 +9,7 @@
 export const config = {
   // Google Forms Configuration for Beta Signup
   // Form URL for direct submission
-  googleFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfqJNb-rUwhBDxM21nKt7N7y1dlCkzQQX39mEmObpfIfPPzrw/formResponse",
+  googleFormUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfkU9vmFi2rVsd-t2RIWJzqpFp5YE0_vFOfSZdKspZ09U0b-w/formResponse",
   
   // Google Form Entry IDs (extracted from form HTML)
   googleFormEntries: {
@@ -26,7 +26,7 @@ export const config = {
     instagram: "",
     twitter: "",
     linkedin: "",
-  },
+  }, 
 
   // Contact Email
   contactEmail: "hola@chessevents.com",

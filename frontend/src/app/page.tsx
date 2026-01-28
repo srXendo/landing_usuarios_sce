@@ -36,7 +36,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-16">
           <a href="#" className="flex items-center">
             <img 
-              src="https://customer-assets.emergentagent.com/job_playmate-chess/artifacts/p4fd6hj4_Presentacio%CC%81n%20app%20y%20MVP.png" 
+              src="./icon_brown.png"
               alt="Chess Events" 
               className="h-10 object-contain"
             />
@@ -631,6 +631,7 @@ function BetaSignupSection() {
                   <input
                     type="text"
                     required
+                    name="entry.2005620554"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Tu nombre"
@@ -644,6 +645,7 @@ function BetaSignupSection() {
                   </label>
                   <input
                     type="text"
+                    name="entry.1045781291"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     placeholder="Tu ciudad"
@@ -659,6 +661,7 @@ function BetaSignupSection() {
                 </label>
                 <input
                   type="email"
+                  name="entry.1065046570"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -709,7 +712,7 @@ function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <img 
-              src="https://customer-assets.emergentagent.com/job_playmate-chess/artifacts/p4fd6hj4_Presentacio%CC%81n%20app%20y%20MVP.png" 
+              src="./icon_white.png" 
               alt="Chess Events" 
               className="h-10 brightness-0 invert"
             />
